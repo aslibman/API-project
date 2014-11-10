@@ -17,6 +17,8 @@ def lookup(stock = "GOOG"):
 	for r in result:
 		page += r + ": " + str(result[r]) + "<br>"
 	return page
+        #http://api.opencalais.com/enlighten/rest/
+        #api for language processing
 
 if __name__ == "__main__":
 	app.debug = True
