@@ -1,4 +1,4 @@
 API-project
 ===========
 Period 7
-Alex Libman, Dennis Nennov
+Alex Libman, Dennis Nenov
