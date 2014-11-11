@@ -5,9 +5,12 @@ app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
 def index():
-	return "Use /s/<stock> to find stock info"
+	if request.method == "GET":
+		return render_template("index.html")
+	else:
+		return redirect("/s/" + request.form["ticker"])
 
-@app.route("/s")
+@app.route("/s/")
 @app.route("/s/<stock>")
 def lookup(stock = "GOOG"):
 	url = "http://dev.markitondemand.com/Api/v2/Quote/json?symbol=%s&callback=myFunction"%stock
