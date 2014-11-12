@@ -25,6 +25,20 @@ def lookup(stock = "GOOG"):
 	url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=%s"%name
 	request = urllib2.urlopen(url)
 	news = json.loads(request.read())["responseData"]["results"]
+	newsText = []
+	for r in news:
+		newsText.append(r["content"])
+
+	#Facebook
+	url = "https://graph.facebook.com/search?access_token=CAACEdEose0cBAMrNZBTDulP8sNNvYTS7zo7fHoRie3d8rK83MJAMI1E7oHgwLaXbHUGDkdFYsZBFoWqq7zoiYGVQWn9hVgZAMfw7w1bT8H6bjMcJD01t7dKef3PLQ0BAZADcVM7lDMy7QlLJTSq19LGSCLtfGLQEVlA8ADNGsDFISTjQBjkbYh0q3UYpuFoNeAPoX86QYFfSe39zK4sZB&q=%s&type=post"%name
+	request = urllib2.urlopen(url)
+	facebook = json.loads(request.read())["data"]
+	facebookText = []
+	for r in facebook:
+		if "description" in r:
+			facebookText.append(r["description"])
+		elif "caption" in r:
+			facebookText.append(r["caption"])
 
 	return render_template("lookup.html",info=result,news=news)
 
