@@ -17,11 +17,14 @@ def lookup(stock = "GOOG"):
 	request = urllib2.urlopen(url)
 	result = json.loads(request.read())
 	result["ChangePercent"] = str(result["ChangePercent"])[:4]
-	return render_template("lookup.html",info=result)
-	##page = ""
-	##for r in result:
-	##	page += r + ": " + str(result[r]) + "<br>"
-	##return page
+	
+	#Google News
+	name = result["Name"].split(" ")[0]
+	url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=%s"%name
+	request = urllib2.urlopen(url)
+	news = json.loads(request.read())["responseData"]["results"]
+
+	return render_template("lookup.html",info=result,news=news)
 
 if __name__ == "__main__":
 	app.debug = True

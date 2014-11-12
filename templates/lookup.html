@@ -24,9 +24,23 @@ width:400px;
 		<tr>
 			<td>{{info["Symbol"]}}</td>
 			<td>${{info["LastPrice"]}}</td>
-			<td>{{info["ChangePercent"]}}%</td>
+			<td>${{info["Change"]}} ({{info["ChangePercent"]}}%)</td>
 			<td>${{info["High"]}}</td>
 			<td>${{info["Low"]}}</td>
 		</tr>
 	</tbody>
 </table>
+<br>
+<hr>
+
+<div style="width:33%;border:2px;border-style:solid;padding:8px;">
+	<h2 align="center">News</h2>
+	<div style="border:0px;overflow:hidden;" class ="pure-menu pure-menu-open pure-menu-vertical">
+		<ul>
+			{% for entry in news %}
+			<li style="height:50px;"><a href="{{entry['unescapedUrl']}}">{{entry["titleNoFormatting"]}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>	
+
