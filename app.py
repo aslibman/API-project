@@ -16,6 +16,8 @@ def lookup(stock = "GOOG"):
 	url = "http://dev.markitondemand.com/Api/v2/Quote/json?symbol=%s&callback=myFunction"%stock
 	request = urllib2.urlopen(url)
 	result = json.loads(request.read())
+	if len(result) < 2:
+		return redirect(url_for("index"))
 	result["ChangePercent"] = str(result["ChangePercent"])[:4]
 	
 	#Google News
