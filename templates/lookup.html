@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<head>
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+<style>
+.form-custom{
+height:125px;
+width:400px;
+}
+</style>
+</head>
+<h1 align="center">{{info["Name"]}}</h1>
+<br>
+<table class="pure-table pure-table-bordered" align="center">
+	<thead>
+		<tr>
+			<th>Symbol</th>
+			<th>Last Price</th>
+			<th>Change</th>
+			<th>High</th>
+			<th>Low</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>{{info["Symbol"]}}</td>
+			<td>${{info["LastPrice"]}}</td>
+			<td>{{info["ChangePercent"]}}%</td>
+			<td>${{info["High"]}}</td>
+			<td>${{info["Low"]}}</td>
+		</tr>
+	</tbody>
+</table>

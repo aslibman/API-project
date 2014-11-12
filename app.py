@@ -16,12 +16,12 @@ def lookup(stock = "GOOG"):
 	url = "http://dev.markitondemand.com/Api/v2/Quote/json?symbol=%s&callback=myFunction"%stock
 	request = urllib2.urlopen(url)
 	result = json.loads(request.read())
-	page = ""
-	for r in result:
-		page += r + ": " + str(result[r]) + "<br>"
-	return page
-        #http://api.opencalais.com/enlighten/rest/
-        #api for language processing
+	result["ChangePercent"] = str(result["ChangePercent"])[:4]
+	return render_template("lookup.html",info=result)
+	##page = ""
+	##for r in result:
+	##	page += r + ": " + str(result[r]) + "<br>"
+	##return page
 
 if __name__ == "__main__":
 	app.debug = True
