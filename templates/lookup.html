@@ -6,6 +6,10 @@
 height:125px;
 width:400px;
 }
+a
+{
+	display: inline
+}
 </style>
 </head>
 <h1 align="center">{{info["Name"]}}</h1>
@@ -38,7 +42,7 @@ width:400px;
 	<div style="border:0px;overflow:hidden;" class ="pure-menu pure-menu-open pure-menu-vertical">
 		<ul>
 			{% for entry in news %}
-			<li style="height:50px;"><a href="{{entry['unescapedUrl']}}">{{entry["titleNoFormatting"]}}</a></li>
+			<li style="height:50px;">{{loop.index}}. {{entry["sentNum"]}} % {{entry["sentType"]}}<a href="{{entry['unescapedUrl']}}">{{entry["titleNoFormatting"]}}</a></li>
 			{% endfor %}
 		</ul>
 	</div>
