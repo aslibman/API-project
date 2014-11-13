@@ -21,7 +21,7 @@ def lookup(stock = "GOOG"):
         result["ChangePercent"] = str(result["ChangePercent"])[:4]
 
         #Google News
-        name = result["Name"].split(" ")[0]
+        name = "_".join(result["Name"].split(" ")[:-1])
         name = urllib.quote(name)
         print name
         url = "https://ajax.googleapis.com/ajax/services/search/news?v=1.0&q=%s"%name
@@ -44,23 +44,27 @@ def lookup(stock = "GOOG"):
         return render_template("lookup.html",info=result,news=newsForApp)
 
 def getNews(url):
-        request2 = urllib2.urlopen(url)
-        request2 = json.loads(request2.read())
-        news = request2["responseData"]["results"]
-        #getting Sentiment
-        newsForApp = []
-        for r in news:
-                entry = {}
-                entry['unescapedUrl']=r['unescapedUrl']
-                entry['titleNoFormatting'] = r['titleNoFormatting']
-                url = entry['unescapedUrl']
-                response = unirest.get("https://loudelement-free-natural-language-processing-service.p.mashape.com/nlp-url/?url=%s"%url,headers={"X-Mashape-Key": "ef5Dv9PwnYmshcMGgQi24Ki0WZKUp1jKZIrjsnemrdgI9ShNW2"})
-                response = json.loads(response.raw_body)
-                entry['sentType'] =  response['sentiment-text']
-                entry['sentNum'] = abs(float(response['sentiment-score']) * 100)
-                newsForApp.append(entry)
-        nextUrl = request2["responseData"]["cursor"]["moreResultsUrl"]
-        return (newsForApp,nextUrl)
+	request2 = urllib2.urlopen(url)
+	request2 = json.loads(request2.read())
+	news = request2["responseData"]["results"]
+	#getting Sentiment
+	newsForApp = []
+	for r in news:
+		entry = {}
+		entry['unescapedUrl']=r['unescapedUrl']
+		entry['titleNoFormatting'] = r['titleNoFormatting']
+		url = entry['unescapedUrl']
+		response = unirest.get("https://loudelement-free-natural-language-processing-service.p.mashape.com/nlp-url/?url=%s"%url,headers={"X-Mashape-Key": "ef5Dv9PwnYmshcMGgQi24Ki0WZKUp1jKZIrjsnemrdgI9ShNW2"})
+		response = json.loads(response.raw_body)
+		if 'sentiment-text' in response:
+			entry['sentType'] =  response['sentiment-text']
+			entry['sentNum'] = abs(float(response['sentiment-score']) * 100)
+		else:
+			entry['sentType'] = "no result"
+			entry['sentNum'] = 0
+		newsForApp.append(entry)
+	nextUrl = request2["responseData"]["cursor"]["moreResultsUrl"]
+	return (newsForApp,nextUrl)
 
 if __name__ == "__main__":
         app.debug = True
